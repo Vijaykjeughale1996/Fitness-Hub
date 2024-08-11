@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>URL Loop with Auto-Scrolling</title>
+    <style>
+        #scrollingContainer {
+            width: 100%;
+            height: 400px;
+            overflow: hidden;
+            position: relative;
+        }
+
+        #scrollingContent {
+            animation: scrollAnimation 5s linear infinite;
+        }
+
+        @keyframes scrollAnimation {
+            0% {
+                transform: translateY(0);
+            }
+            100% {
+                transform: translateY(calc(-100% + 400px)); /* Adjust the value to match the height of the container */
+            }
+        }
+    </style>
+</head>
+<body>
+    <h1>Staying on URL: <span id="currentURL"></span></h1>
+    <!-- Create a container to apply the scrolling effect -->
+    <div id="scrollingContainer">
+        <!-- Optionally, you can display the URL in an iframe to show the actual page content -->
+        <iframe id="urlIframe" style="width: 100%; height: 400px;"></iframe>
+        <!-- This div will scroll inside the container to create the effect -->
+        <div id="scrollingContent">
+            <!-- Empty content here -->
+        </div>
+    </div>
+
+    <script>
+        var urlList = {{ url_list|safe }};
+        var stayDurationInSeconds = {{ stay_duration }};
+        var currentIndex = 0;
+
+        function loadNextURL() {
+            var currentURL = urlList[currentIndex];
+            document.getElementById('currentURL').innerText = currentURL;
+            document.getElementById('urlIframe').src = currentURL;
+
+            // Move to the next URL or go back to the first URL if at the end of the list
+            currentIndex = (currentIndex + 1) % urlList.length;
+
+            setTimeout(loadNextURL, stayDurationInSeconds * 1000);
+        }
+
+        // Start the loop by calling loadNextURL for the first time
+        loadNextURL();
+    </script>
+</body>
+</html>

@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>URL Loop</title>
+</head>
+<body>
+    <h1>Staying on URL: {{ url }}</h1>
+    <!-- Optionally, you can display the URL in an iframe to show the actual page content -->
+    <iframe src="{{ url }}" style="width: 100%; height: 400px;"></iframe>
+
+    <!-- Render the stay_duration value as a data attribute in a div -->
+    <div id="stayDuration" data-duration="{{ stay_duration }}" style="display: none;"></div>
+
+    <script>
+        // Function to redirect to the next URL after stay_duration seconds
+        function redirectToNextURL() {
+            window.location.href = '/url-loop/';
+        }
+
+        // Get the stay_duration value from the data attribute and use it in setTimeout
+        var stayDurationInSeconds = parseInt(document.getElementById('stayDuration').getAttribute('data-duration'));
+        setTimeout(redirectToNextURL, stayDurationInSeconds * 1000);
+    </script>
+</body>
+</html>

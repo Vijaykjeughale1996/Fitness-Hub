@@ -1,0 +1,16 @@
+# Ignore IDE configurations
+.idea/
+
+# Ignore Python virtual environment
+venv/
+
+# Ignore Python bytecode
+__pycache__/
+*.pyc
+*.pyo
+
+# Ignore environment variables file
+.env
+
+# Ignore npm debug logs
+npm-debug.log*
